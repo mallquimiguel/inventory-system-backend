@@ -24,17 +24,6 @@ class ReservationBase(BaseModel):
             raise ValueError('El estado debe ser "pending", "completed"')
         return value
     
-    # Validator for delivery_date to ensure it's within 2 months from today
-    @field_validator('delivery_date')
-    def validate_delivery_date(cls, value):
-        today = date.today()
-        max_date = today + timedelta(weeks=1)
-        if value < today:
-            raise ValueError("La fecha de entrega no puede ser anterior a la fecha actual.")
-        if value > max_date:
-            raise ValueError("La fecha de entrega no puede exceder los 2 meses desde la fecha actual.")
-        return value
-
 # Schema for creating a Reservation
 class ReservationCreate(ReservationBase):
     items: List[ReservationItemCreate]
